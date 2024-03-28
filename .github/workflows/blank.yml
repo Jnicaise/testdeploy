@@ -48,7 +48,7 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     environment: 
-      name: ${{ needs.build.outputs.stageEnv }}
+      name: ${{ env.ENVIRONMENT }} # ${{ needs.build.outputs.stageEnv }}
    
       
     steps:         
