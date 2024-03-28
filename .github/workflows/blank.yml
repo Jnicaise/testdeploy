@@ -40,7 +40,7 @@ jobs:
 
   deployment:
     runs-on: ubuntu-latest
-    environment: test
+    environment: ${{ env.ENVIRONMENT }}
     
     steps:
       - name: Information
