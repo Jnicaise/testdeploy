@@ -48,7 +48,7 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     environment: 
-      name: ${{ env.ENVIRONMENT }} # ${{ needs.build.outputs.stageEnv }}
+      name: ${{ needs.build.outputs.stageEnv }}
    
       
     steps:         
@@ -56,4 +56,5 @@ jobs:
         run: | 
           echo ${{ secrets.TEST_SEC }}
           echo ${{ vars.TEST_VAR }}
+          echo ${{ needs.build.outputs.stageEnv }}
           echo ${{ env.ENVIRONMENT }}
