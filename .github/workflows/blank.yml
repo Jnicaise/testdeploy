@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: ${{ needs.build.outputs.stageEnv }}
-   
+    needs: build
       
     steps:         
       - name: Information
