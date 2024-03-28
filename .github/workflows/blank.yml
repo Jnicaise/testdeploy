@@ -12,9 +12,6 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-env:
-  ENVIRONMENT: "test"
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -22,9 +19,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    outputs:
-      stageEnv: ${{ steps.init.outputs.stageEnv }}
-      
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -40,15 +35,33 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
-      - name: Make environment variables global 
-        id: init
+#      - name: Make environment variables global 
+#        id: init
+#        run: |
+#          echo "stageEnv=${{ env.ENVIRONMENT }}" >> $GITHUB_OUTPUT
+      - name: 🤔 Evaluate branch name
+        id: branch-name
         run: |
-          echo "stageEnv=${{ env.ENVIRONMENT }}" >> $GITHUB_OUTPUT
+          if ${{ contains(github.ref, 'develop') }}; then
+            PROPERTIES_VALUE="dev"
+            echo "stageEnv=DEV >> $GITHUB_OUTPUT
+          elif ${{ contains(github.ref, 'feat') }}; then
+            PROPERTIES_VALUE="dev"
+            echo "stageEnv=DEV >> $GITHUB_OUTPUT
+          elif ${{ contains(github.ref, 'release') }}; then
+            PROPERTIES_VALUE="qua"
+            echo "stageEnv=QUA >> $GITHUB_OUTPUT
+          elif ${{ contains(github.ref, 'main') }}; then
+            PROPERTIES_VALUE="pro"
+            echo "stageEnv=PRO >> $GITHUB_OUTPUT
 
+    outputs:
+      ENVIRONMENT: ${{ steps.init.outputs.ENVIRONMENT }}
+      
   deployment:
     runs-on: ubuntu-latest
     environment: 
-      name: ${{ needs.build.outputs.stageEnv }}
+      name: ${{ needs.build.outputs.ENVIRONMENT }}
     needs: build
       
     steps:         
@@ -56,5 +69,4 @@ jobs:
         run: | 
           echo ${{ secrets.TEST_SEC }}
           echo ${{ vars.TEST_VAR }}
-          echo ${{ needs.build.outputs.stageEnv }}
-          echo ${{ env.ENVIRONMENT }}
+          echo ${{ needs.build.outputs.ENVIRONMENT }}
