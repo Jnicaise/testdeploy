@@ -44,16 +44,16 @@ jobs:
         run: |
           if ${{ contains(github.ref, 'develop') }}; then
             PROPERTIES_VALUE="dev"
-            echo "stageEnv='DEV' >> $GITHUB_OUTPUT
+            echo "stageEnv=DEV" >> $GITHUB_OUTPUT
           elif ${{ contains(github.ref, 'feat') }}; then
             PROPERTIES_VALUE="dev"
-            echo "stageEnv='DEV' >> $GITHUB_OUTPUT
+            echo "stageEnv=DEV" >> $GITHUB_OUTPUT
           elif ${{ contains(github.ref, 'release') }}; then
             PROPERTIES_VALUE="qua"
-            echo "stageEnv='QUA' >> $GITHUB_OUTPUT
+            echo "stageEnv=QUA" >> $GITHUB_OUTPUT
           elif ${{ contains(github.ref, 'main') }}; then
             PROPERTIES_VALUE="pro"
-            echo "stageEnv='PRO' >> $GITHUB_OUTPUT
+            echo "stageEnv=PRO" >> $GITHUB_OUTPUT
 
     outputs:
       ENVIRONMENT: ${{ steps.init.outputs.ENVIRONMENT }}
