@@ -43,7 +43,7 @@ jobs:
       - name: Make environment variables global 
         id: init
         run: |
-          echo "stageEnv=${{ env.stageEnv }}" >> $GITHUB_OUTPUT
+          echo "stageEnv=${{ env.ENVIRONMENT }}" >> $GITHUB_OUTPUT
 
   deployment:
     runs-on: ubuntu-latest
