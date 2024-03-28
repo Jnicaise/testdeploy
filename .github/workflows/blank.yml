@@ -54,7 +54,8 @@ jobs:
           elif ${{ contains(github.ref, 'main') }}; then
             PROPERTIES_VALUE="pro"
             echo "stageEnv=PRO" >> $GITHUB_OUTPUT
-
+          fi
+          
     outputs:
       ENVIRONMENT: ${{ steps.init.outputs.ENVIRONMENT }}
       
