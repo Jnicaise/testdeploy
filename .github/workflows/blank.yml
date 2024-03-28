@@ -45,4 +45,6 @@ jobs:
     steps:
       - name: Information
         run: | 
-          echo $env.ENVIRONMENT
+          echo ${{ secrets.TEST_SEC }}
+          echo ${{ vars.TEST_VAR }}
+          echo ${{ env.ENVIRONMENT }}
