@@ -22,7 +22,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    outputs:
+      stageEnv: ${{ steps.init.outputs.stageEnv }}
+      
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -38,11 +40,17 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
+      - name: Make environment variables global 
+        id: init
+        run: |
+          echo "stageEnv=${{ env.stageEnv }}" >> $GITHUB_OUTPUT
+
   deployment:
     runs-on: ubuntu-latest
-    environment: ${{ env.ENVIRONMENT }}
-    
-    steps:
+    environment: ${{ needs.build.outputs.stageEnv }}
+   
+      
+    steps:         
       - name: Information
         run: | 
           echo ${{ secrets.TEST_SEC }}
