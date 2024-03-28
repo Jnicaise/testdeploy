@@ -57,7 +57,7 @@ jobs:
           fi
           
     outputs:
-      ENVIRONMENT: ${{ steps.init.outputs.ENVIRONMENT }}
+      ENVIRONMENT: ${{ steps.branch-name.outputs.ENVIRONMENT }}
       
   deployment:
     runs-on: ubuntu-latest
